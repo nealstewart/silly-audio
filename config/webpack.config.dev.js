@@ -158,6 +158,7 @@ module.exports = {
           /\.gif$/,
           /\.jpe?g$/,
           /\.png$/,
+          /\.mp3$/
         ],
         loader: require.resolve('file-loader'),
         options: {
@@ -166,7 +167,7 @@ module.exports = {
       },
       {
         test: /\.mp3$/,
-        loader: 'file',
+        loader: require.resolve('file-loader'),
         query: {
            name: 'static/media/[name].[hash:8].[ext]'
         }

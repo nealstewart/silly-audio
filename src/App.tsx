@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Dim } from './types';
 import { drawFrame } from './circleVisualisation';
+const AUDIO = require('./static/shakuhachi.mp3');
 
 const dim: Dim = {
   width: 1280,
@@ -83,7 +84,7 @@ class App extends React.Component {
           onPlaying={() => this.animate()}
           onPause={() => this.stop()}
           ref={a => this.onRef(a)}
-          src="/shakuhachi.mp3"
+          src={AUDIO}
           controls={true}
         />
       </div>
