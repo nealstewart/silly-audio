@@ -31,8 +31,7 @@ class App extends React.Component {
     if (!this.audioSrc) {
       return;
     }
-    this.audioSrc.disconnect(this.analyser);
-    this.audioSrc.disconnect(this.audioContext.destination);
+    this.audioContext.close();
     this.stop();
   }
 

@@ -14,7 +14,7 @@ export const drawFrame = (dim: Dim, frequencyData: Uint8Array, context: CanvasRe
         y: height / 2
     };
 
-    context.clearRect(0, 0, 1280, 920);
+    context.clearRect(0, 0, width, height);
     context.fillStyle = getColor(frequencyData).toString();
     context.beginPath();
     context.moveTo(origin.x, origin.y);
