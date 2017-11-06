@@ -7,8 +7,8 @@ body {
 
 audio {
   position: absolute;
-  top: 1em;
-  left: 1em;
+  bottom: 0;
+  right: 0;
 }
 
 .App {
