@@ -3,21 +3,21 @@ import { Dim } from './types';
 import { drawFrame } from './circleVisualisation';
 const AUDIO = require('./static/shakuhachi.mp3');
 
-const dim: Dim = {
+const DEFAULT_DIMENSIONS: Dim = {
   width: 1280,
   height: 920
 };
 
 class App extends React.Component {
-  gradientStyle: CanvasGradient;
-  canvasContext: CanvasRenderingContext2D | null;
-  canvasElement: HTMLCanvasElement;
   readonly frequencyData: Uint8Array;
-  request: number;
-  audioSrc?: MediaElementAudioSourceNode;
   readonly analyser: AnalyserNode;
   readonly audioContext: AudioContext;
+  gradientStyle: CanvasGradient;
+  canvasElement: HTMLCanvasElement;
+  request: number;
+  audioSrc?: MediaElementAudioSourceNode;
   audioElement?: HTMLAudioElement;
+  dim?: Dim;
 
   constructor() {
     super();
@@ -53,8 +53,14 @@ class App extends React.Component {
     }
 
     this.canvasElement = el!;
-    this.canvasContext = this.canvasElement.getContext('2d');
     this.forceUpdate();
+  }
+
+  onDivRef(div: HTMLDivElement | null) {
+    if (!div) {
+      return;
+    }
+    this.dim = div.getBoundingClientRect();
   }
 
   animate() {
@@ -69,16 +75,16 @@ class App extends React.Component {
 
   render() {
     this.analyser.getByteFrequencyData(this.frequencyData);
-    const context = this.canvasContext;
+
+    const dim = this.dim || DEFAULT_DIMENSIONS;
 
     const {width, height} = dim;
-
-    if (context) {
-      drawFrame(dim, this.frequencyData, context);
+    if (this.canvasElement) {
+      drawFrame(dim, this.frequencyData, this.canvasElement.getContext('2d')!);
     }
 
     return (
-      <div>
+      <div className="App" ref={el => this.onDivRef(el)}>
         <canvas width={width} height={height} ref={el => this.onCanvasRef(el)} />
         <audio
           onPlaying={() => this.animate()}
